@@ -1,0 +1,5 @@
+{
+"ConnectionStrings":{
+		"CrudClienteConnection":"Data Source=CrudCliente.db"
+	}
+}
