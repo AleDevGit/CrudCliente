@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CrudCliente.Dominio.Entidade;
-using CrudCliente.Dominio.IBaseRepositorio;
+using CrudCliente.Dominio.IRepositorios;
 using CrudCliente.Repositorio.Context;
 
 namespace CrudCliente.Repositorio.Repositorios

@@ -1,50 +1,87 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CrudCliente.Dominio.Entidade;
-using CrudCliente.Dominio.IBaseRepositorio;
+using CrudCliente.Dominio.IRepositorios;
 using CrudCliente.Repositorio.Context;
+using Dapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace CrudCliente.Repositorio.Repositorios
 {
-    public class ClienteRepositorio : IClienteRepositorio
+    public class ClienteRepositorio : BaseQueryRepository, IClienteRepositorio 
     {
-       
-        void IClienteRepositorio.Adicionar(Cliente entity)
+      
+        public async Task<Cliente[]> ObterTodos()
         {
-            throw new System.NotImplementedException();
+            var selectQuery = "SELECT * FROM CLIENTES";
+
+            SqliteConnection open = OpenDB();
+            var result = await open.QueryAsync<Cliente>(selectQuery.Replace("''","NULL"));
+            
+            return result.ToArray();  
+        }
+         
+
+       public async Task<Cliente[]> ObterPorNome(string nome){
+            var selectQuery = $"SELECT * FROM CLIENTES WHERE NOME LIKE '{nome}%'";
+
+            SqliteConnection open = OpenDB();
+            var result = await open.QueryAsync<Cliente>(selectQuery.Replace("''","NULL"));
+            
+            return result.ToArray();
+       }
+       public async Task<Cliente> ObterPorId(int id)
+       {
+           var selectQuery = $"SELECT * FROM CLIENTES WHERE ID = {id}";
+
+            SqliteConnection open = OpenDB();
+            var result = await open.QueryAsync<Cliente>(selectQuery.Replace("''","NULL"));
+
+            return result.FirstOrDefault();     
+       }
+
+       public async Task<Cliente> ObterPorCPF(string cpf)
+       {
+            var selectQuery = $"SELECT * FROM CLIENTES WHERE CPF = '{cpf}'";
+
+            SqliteConnection open = OpenDB();
+            var result = await open.QueryAsync<Cliente>(selectQuery.Replace("''","NULL"));
+
+            return result.FirstOrDefault();  
         }
 
-        void IClienteRepositorio.Atualizar(Cliente entity)
+        public void Adicionar(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            var insertQuery = $@"INSERT INTO CLIENTES 
+                                    (NOME, CPF, DATANASCIMENTO) 
+                                VALUES 
+                                    ('{cliente.Nome}', '{cliente.CPF}', '{cliente.DataNascimento}')";
+            
+            ExecutarComando(insertQuery);                 
         }
 
-        Task<IEnumerable<Cliente>> IClienteRepositorio.Obter(Cliente entity)
+        public void Atualizar(Cliente cliente)
         {
-           var sql = "SELECT * FROM DBO.CLIENTE";
-           if (entity != null){
-                sql +=" Where";
-                if (entity.Id > 0){
-                    sql +=" Id = " + entity.Id.ToString() + " AND "; 
-                }
-                if (!string.IsNullOrEmpty(entity.CPF )){
-                    sql +=" CPF = " + entity.CPF + " AND "; 
-                }
-                if (!string.IsNullOrEmpty(entity.Nome)){
-                    sql +=" Nome = " + entity.Nome + " AND "; 
-                }
-                
+            string updateQuery = $@"
+                UPDATE CLIENTES
+                   SET 
+                      Nome = '{cliente.Nome}', CPF = '{cliente.CPF}'
+                      , DataNascimento = '{cliente.DataNascimento}' 
+                 WHERE Id = {cliente.Id}";
 
-                
-           }
-           
-
-            throw new System.NotImplementedException();
+			ExecutarComando(updateQuery);
         }
 
-        void IClienteRepositorio.Remover(Cliente entity)
+        public void Remover(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+             string deleteQuery = $@"
+                DELETE FROM CLIENTES
+                    WHERE Id = {cliente.Id}";
+
+			ExecutarComando(deleteQuery);
         }
     }
 }

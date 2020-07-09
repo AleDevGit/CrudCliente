@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CrudCliente.Dominio.Entidade;
 
-namespace CrudCliente.Dominio.IBaseRepositorio
+namespace CrudCliente.Dominio.IRepositorios
 {
     public interface IEnderecoRepositorio
     {
