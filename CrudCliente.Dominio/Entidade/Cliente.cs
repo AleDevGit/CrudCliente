@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CrudCliente.Dominio.Entidade
 {
@@ -8,6 +9,7 @@ namespace CrudCliente.Dominio.Entidade
         public string Nome { get; set; } 
         public string CPF { get; set; }
          public DateTime DataNascimento { get; set; }
+         public List<Endereco> Enderecos  { get; set; }
 
 
     }

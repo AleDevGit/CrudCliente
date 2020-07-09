@@ -6,9 +6,10 @@ namespace CrudCliente.Dominio.IRepositorios
 {
     public interface IEnderecoRepositorio
     {
-        void Adicionar(Endereco entity);        
-        Task<IEnumerable<Endereco>> Obter(Endereco entity);
-        void Atualizar(Endereco entity);
-        void Remover(Endereco entity);
+        Task<Endereco[]> ObterTodos();
+        Task<Endereco> ObterPorId(int id);
+        void Adicionar(Endereco endereco);
+        void Atualizar(Endereco endereco);
+        void Remover(Endereco endereco);
     }
 }

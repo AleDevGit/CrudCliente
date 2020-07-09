@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CrudCliente.Api.Validation;
 
@@ -6,6 +7,9 @@ namespace CrudCliente.Api.Dtos
 {
     public class ClienteDto
     {
+
+        public int Id { get; set; } 
+
         [Required(ErrorMessage="Nome obrigatório")]
         [StringLength(30, ErrorMessage="Descrição, máximo de 30 caracteres")]
         public string Nome { get; set; } 
@@ -18,5 +22,6 @@ namespace CrudCliente.Api.Dtos
         [StringLength(10, ErrorMessage="CPF, máximo de 10 caracteres")]
         [Required(ErrorMessage="Data de Nascimento obrigatório")]
         public string DataNascimento { get; set; }
+
     }
 }
