@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.0.0-alpha03" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App"  Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App"  Version="2.2.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrudCliente.Api\CrudCliente.Api.csproj" />
